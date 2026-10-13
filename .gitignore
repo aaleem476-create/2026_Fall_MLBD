@@ -1,0 +1,33 @@
+## Markdown log files
+*.log
+*/*.log
+*/*/*.log
+## R History files
+.Rhistory
+*/.Rhistory
+*/*/.Rhistory
+## DS_Store files
+*.DS_Store
+*/*.DS_Store
+*/*/*.DS_Store
+## other files that are made by R markdown or latex:
+*/*.nav
+*/*.aux
+*/*.snm
+*/*.toc
+*/*/*.nav
+*/*/*.aux
+*/*/*.snm
+*/*/*.toc
+
+## Hide this one for homework
+homework/Rmarkdown_example.Rmd
+homework/homework_2_solutions.Rmd
+lectures/week7/2025_06_microbiome.pptx
+.Rproj.user
+
+## Admin files (not for students)
+TA Form*.docx
+
+## Office lock files
+~$*
