@@ -35,7 +35,7 @@ img_path <- "figs/"
 ## Things you should know about MLBD
 \Large
 * Mondays & Wednesdays, 12:00-1:50pm (Oct 14 - Dec 16)
-  * Wednesdays in person: Room B610 (Mondays Zoom only)
+  * All lectures on Zoom; Room B610 open Wednesdays (from Oct 21) to join together
 * TA: Yaoan Leng (yl2800@gsbs.rutgers.edu)
 * [Click here for the Zoom link](https://rutgers.zoom.us/j/91504536675?pwd=owpXpx2CEOYBKWD4KJvxfQjO37XsT0.1)
 * GitHub vs Canvas:

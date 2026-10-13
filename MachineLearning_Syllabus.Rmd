@@ -26,7 +26,7 @@ Students who take this course will:
 Students should have completed GSND 5345Q: Fundamentals of Data Science or have equivalent experience. A working knowledge of and experience with R or Python is required. An introductory course in statistics, biostatistics, or equivalent experience in statistical analysis is recommended for this course. 
 
 ### COURSE FORMAT:
-This class will be taught virtually using a synchronous remote modality, although on Wednesdays students will have a classroom (Room B610) to gather in for the lecture; Monday lectures are Zoom only. Class will occur Mondays and Wednesdays from 12:00pm-1:50pm. Courses may also be recorded and made available for students who need to miss classes due to personal reasons, illness, or research related needs.
+This class will be taught virtually using a synchronous remote modality: every lecture will be delivered over Zoom. Starting October 21, Room B610 will also be available on Wednesdays for students who want to gather and join the Zoom lecture together. Class will occur Mondays and Wednesdays from 12:00pm-1:50pm. Courses may also be recorded and made available for students who need to miss classes due to personal reasons, illness, or research related needs.
 
 ### ZOOM Link:
 Zoom ID for all sessions is 915 0453 6675 (passcode: 034991), or use the following link: [https://rutgers.zoom.us/j/91504536675?pwd=owpXpx2CEOYBKWD4KJvxfQjO37XsT0.1](https://rutgers.zoom.us/j/91504536675?pwd=owpXpx2CEOYBKWD4KJvxfQjO37XsT0.1). The link is also available through the course GitHub page.
