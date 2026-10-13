@@ -31,3 +31,8 @@ TA Form*.docx
 
 ## Office lock files
 ~$*
+
+## R app history
+.Rapp.history
+*/.Rapp.history
+*/*/.Rapp.history
