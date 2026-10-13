@@ -45,6 +45,7 @@ img_path <- "figs/"
 
 ## Things you should know about MLBD
 \Large
+* Course taught in R -- **new this semester:** Python companion guides and code!
 * Background experience
   * Introductory statistics and molecular biology
 * Prerequisites (Machine Learning for Biomedical Data)
