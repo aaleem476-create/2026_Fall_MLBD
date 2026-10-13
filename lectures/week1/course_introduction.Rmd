@@ -36,7 +36,7 @@ img_path <- "figs/"
 \Large
 * Mondays & Wednesdays, 12:00-1:50pm (Oct 14 - Dec 16)
 * TA: Yaoan Leng (yl2800@gsbs.rutgers.edu)
-* [Click here for the Zoom link](https://rutgers.zoom.us/j/95676644246?pwd=coPLXHRNqrf8akL5k5mSl19CDIBoiW.1)
+* [Click here for the Zoom link](https://rutgers.zoom.us/j/91504536675?pwd=owpXpx2CEOYBKWD4KJvxfQjO37XsT0.1)
 * GitHub vs Canvas:
     + [https://github.com/wevanjohnson/2026_Fall_MLBD](https://github.com/wevanjohnson/2026_Fall_MLBD)
 * [Link to Syllabus](https://github.com/wevanjohnson/2026_Fall_MLBD/raw/refs/heads/main/MachineLearning_Syllabus.docx)

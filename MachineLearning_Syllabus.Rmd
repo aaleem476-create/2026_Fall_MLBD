@@ -29,7 +29,7 @@ Students should have completed GSND 5345Q: Fundamentals of Data Science or have 
 This class will be taught virtually using a synchronous remote modality, although students will be provided a classroom to gather for each lecture. Class will occur Mondays and Wednesdays from 12:00pm-1:50pm. Courses may also be recorded and made available for students who need to miss classes due to personal reasons, illness, or research related needs.
 
 ### ZOOM Link:
-Zoom ID for all sessions is 956 7664 4246 (password: 063783), or use the following link: [https://rutgers.zoom.us/j/95676644246?pwd=coPLXHRNqrf8akL5k5mSl19CDIBoiW.1](https://rutgers.zoom.us/j/95676644246?pwd=coPLXHRNqrf8akL5k5mSl19CDIBoiW.1). The link is also available through the course GitHub page.
+Zoom ID for all sessions is 915 0453 6675 (passcode: 034991), or use the following link: [https://rutgers.zoom.us/j/91504536675?pwd=owpXpx2CEOYBKWD4KJvxfQjO37XsT0.1](https://rutgers.zoom.us/j/91504536675?pwd=owpXpx2CEOYBKWD4KJvxfQjO37XsT0.1). The link is also available through the course GitHub page.
 
 ### FACULTY AND STAFF: 
 **Instructor:** W. Evan Johnson, Ph.D.\
