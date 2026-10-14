@@ -1,6 +1,6 @@
 ---
-title: "Course Introduction: GSND 5355Q"
-subtitle: "Machine Learning for Biomedical Data (MLBD)"
+title: "Course Introduction"
+subtitle: "GSND 5355Q [Machine Learning for Biomedical Data](https://njms.rutgers.edu/sgs/olc/mlbd/index.php)"
 author: | 
   | W. Evan Johnson, Ph.D.
   | Professor, Division of Infectious Disease

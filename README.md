@@ -1,4 +1,4 @@
-# Machine Learning for Biomedical Data (GSND 5355Q)
+# GSND 5355Q [Machine Learning for Biomedical Data](https://njms.rutgers.edu/sgs/olc/mlbd/index.php)
 
 ## Dates: Fall 2026, October 14-December 16 (Mondays and Wednesdays, 12:00-1:50pm)
 

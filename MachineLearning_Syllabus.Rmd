@@ -1,5 +1,5 @@
 ---
-title: "Machine Learning for Biomedical Data (GSND 5355Q)"
+title: "GSND 5355Q [Machine Learning for Biomedical Data](https://njms.rutgers.edu/sgs/olc/mlbd/index.php)"
 date: Fall 2026
 output: word_document
 ---
