@@ -45,7 +45,8 @@ img_path <- "figs/"
 
 ## Things you should know about MLBD
 \Large
-* Course taught in R -- **new this semester:** Python companion guides and code!
+* Course taught in R 
+  * **New this semester:** Python companion guides and code!
 * Background experience
   * Introductory statistics and molecular biology
 * Prerequisites (Machine Learning for Biomedical Data)
@@ -187,6 +188,14 @@ Machine learning algorithms are generally classified into two categories:
 The `caret` package in R has several useful functions for building and assessing machine learning methods.
 
 - _Examples:_
+
+## The scikit-learn package in Python
+\Large
+The `scikit-learn` package is the Python counterpart to `caret`: one consistent interface for building, tuning, and assessing machine learning models.
+
+- `train_test_split`, `cross_val_score`, and `GridSearchCV` for data splitting, cross validation, and tuning
+- Every model uses the same `fit()` / `predict()` pattern
+- _Tutorial and examples coming next week_
 
 ## Regularization in Machine Learning
 \Large
