@@ -1,6 +1,6 @@
 ---
 title: "Advanced Topics in Regression"
-author: | 
+author: |
   | W. Evan Johnson, Ph.D.
   | Professor, Division of Infectious Disease
   | Director, Center for Data Science
@@ -16,10 +16,10 @@ header-includes:
   - \addtobeamertemplate{frametitle}{\vspace*{.25in}}{\vspace*{.25in}}
   - \setbeamerfont{frametitle}{size=\huge}
   - \usepackage{tikz}
-output: 
+output:
   beamer_presentation
-classoption: aspectratio=169 
-editor_options: 
+classoption: aspectratio=169
+editor_options:
   chunk_output_type: console
 tables: true
 ---
@@ -31,30 +31,36 @@ img_path <- "regfigs/"
 
 ## Introduction to Regression
 \Large
-In data science applications, it is very common to be interested in the relationship between two or more variables. For example, we we might want to use a data-driven approach that examines the relationship between baseball player statistics and success to guide the building of a baseball team with a limited budget.  Before delving into this more complex example, we introduce necessary concepts needed to understand regression. 
+We often want to know how two or more variables are related.
+
+* Example: which baseball player statistics predict team success, to build a team on a limited budget?
+* First, the core concepts of regression.
 
 ## Introduction to Regression
 \Large
-In statistical modeling, regression analysis is a set of statistical processes for estimating the relationships between a dependent variable (often called the 'outcome' or 'response' variable, or a 'label' in machine learning parlance) and one or more independent variables (often called 'predictors', 'covariates', 'explanatory variables' or 'features'). 
+**Regression** estimates the relationship between:
+
+* a **dependent variable**: outcome, response, or *label* in ML
+* one or more **independent variables**: predictors, covariates, or *features* in ML
 
 ## Introduction to Regression
 \Large
-The most common form of regression analysis is **linear regression**, in which one finds the line (or a more complex linear combination) that most closely fits the data according to a specific mathematical criterion.
+The most common form is **linear regression**: find the line (or linear combination) that best fits the data under a chosen criterion.
 
 ## Introduction to Regression
 \Large
-In your math classes, you used the following model for a line, where $m$ represents the slope and $b$ represents the $y$-intercept: 
+In math class, a line is (slope $m$, intercept $b$):
 $$y=mx+b.$$
 
-In statistics, we use a slightly different formulation and notation: 
+In statistics, we write:
 $$y_i=\beta_0+x_i\beta_1 ,$$
-which describes a line with slope $\beta_1$ and $y$-intercept $\beta_0$, and the $y_i$ and $x_i$ represent the observed points from your dataset. 
+with slope $\beta_1$, intercept $\beta_0$, and observed data points $(x_i, y_i)$.
 
 ## Introduction to Regression
 \Large
-One other important difference between your math class and statistics is that in math you are usually fitting lines that fit your points _exactly_, whereas in statistics your points usually _do not_ fall on directly on your line. 
-
-In statistics, we are attempting to find the __best fit__ line that uses your data to estimate the unobserved relationship (slope and intercept) between the independent and dependent variables. As defined above, this relationship between parameters $\beta_0$ and $\beta_1$ and the data points is called a **linear regression model**. 
+* In math, lines fit the points _exactly_
+* In statistics, points _do not_ fall exactly on the line
+* We find the __best fit__ line to estimate the unknown slope and intercept: a **linear regression model**
 
 ## Introduction to Regression
 \center
@@ -63,33 +69,36 @@ In statistics, we are attempting to find the __best fit__ line that uses your da
 
 ## Introduction to Regression
 \Large
-Formal Definition: suppose we observe $n$ data pairs and call them 
-$${(x_i, y_i), i = 1, ..., n}.$$ 
-
-We can describe the underlying relationship between $y_i$ and $x_i$ involving this error term $\epsilon_i$ by
+Formally, we observe $n$ data pairs
+$${(x_i, y_i), i = 1, ..., n},$$
+and model
 $$y_i=\beta_0+x_i\beta_1 +\epsilon_i.$$
 
-We call the deviations of the data from the line the **errors**. It is also important to note that the true underlying parameters $\beta_0$ and $\beta_1$ are not observed, but must be _estimated_ using the data.
+* $\epsilon_i$ are the **errors** (deviations from the line)
+* $\beta_0$ and $\beta_1$ are unknown and must be _estimated_ from the data
 
 
 
 ## Introduction to Regression
 \Large
-The goal is to find estimated values $\hat\beta_0$ and $\hat\beta_1$ for the parameters $\beta_0$ and $\beta_1$ which would provide the "best fit" in some sense for the data points. 
+Goal: find estimates $\hat\beta_0$ and $\hat\beta_1$ that "best fit" the data.
 
-Here, the "best fit" will be understood as in the __least-squares__ approach: a line that minimizes the sum of squared residuals 
+__Least squares__: minimize the sum of squared residuals
 $$\min_{\beta_0,\beta_1}Q(\beta_0,\beta_1) =  \underset{\beta_0,\beta_1}\inf\left\{\sum_{i=1}^n(y_i-\beta_0-x_i\beta_1)^2\right\}=\inf_{\beta_0,\beta_1}\sum_{i=1}^n \epsilon_i^2.$$
 
 ## Introduction to Regression
 \Large
-The least squares estimator (LSE) is the most commonly used method due to its favorable mathematical properties (not shown here). For example, it can be mathematically shown that the LSE is the _minimum variance unbiased linear estimator_--meaning that no unbiased estimator can have a smaller (sampling distrbution) variance for $\hat\beta_0$ and $\hat\beta_1$.  
+The least squares estimator (LSE) is the most common choice because of its properties:
+
+* It is the _best linear unbiased estimator_ (Gauss-Markov)
+* No other linear unbiased estimator has smaller sampling variance for $\hat\beta_0$ and $\hat\beta_1$
 
 ## Introduction to regression
 ![](regfigs/rss.png)
 
 ## Case study: is height hereditary?
 \Large
-History of regression: Francis Galton^[https://en.wikipedia.org/wiki/Francis_Galton] studied the variation and heredity of human traits, including height data from families to try to understand heredity. While doing this, he developed the concepts of correlation and regression, as well as a connection to pairs of data that follow a normal distribution. 
+Francis Galton^[https://en.wikipedia.org/wiki/Francis_Galton] studied heredity using family height data. Along the way, he developed **correlation** and **regression**.
 
 \center
 ![](regfigs/Francis_Galton2.jpg){ width=20% }
@@ -97,13 +106,13 @@ History of regression: Francis Galton^[https://en.wikipedia.org/wiki/Francis_Gal
 
 ## Case study: is height hereditary?
 \Large
-A very specific question Galton tried to answer was: how well can we predict a child's height based on the parents' height? The technique he developed to answer this question was called **regression**!  
+Galton's question: how well can we predict a child's height from the parents' heights? His answer: **regression**!
 
-__Historical note__: Galton made important contributions to statistics and genetics, but he was also a proponent of eugenics, a scientifically flawed philosophical movement with horrific historical consequences: [https://pged.org/history-eugenics-and-genetics/](https://pged.org/history-eugenics-and-genetics/).
+__Historical note__: Galton also promoted eugenics, a scientifically flawed movement with horrific consequences: [https://pged.org/history-eugenics-and-genetics/](https://pged.org/history-eugenics-and-genetics/).
 
 ## Case study: is height hereditary?
 \Large
-Galton's height data is in the `HistData` package. We will create a dataset with the heights of fathers and a randomly selected son: 
+Galton's data are in `HistData`. Keep each father and one randomly selected son:
 
 \footnotesize
 ```{r, message=FALSE, warning=FALSE, echo=TRUE}
@@ -123,55 +132,54 @@ galton_heights <- GaltonFamilies %>%
 
 ## Case study: is height hereditary?
 
-Suppose we were asked to summarize the father and son data. Since both distributions are well approximated by the normal distribution, we could use the two averages and two standard deviations as summaries:
+Both distributions are approximately normal, so summarize with means and SDs:
 \small
 ```{r, echo=TRUE}
-galton_heights %>% 
+galton_heights %>%
   summarize(mean(father), sd(father), mean(son), sd(son))
 ```
 
-However, this summary fails to describe an important characteristic of the data: the trend that the taller the father, the taller the son. 
+But this misses the key feature: taller fathers have taller sons.
 
 ## Case study: is height hereditary?
 
 ```{r scatterplot, fig.height = 3, fig.width = 3, out.width="40%", echo=TRUE, fig.align="center"}
-galton_heights %>% ggplot(aes(father, son)) + 
+galton_heights %>% ggplot(aes(father, son)) +
   geom_point(alpha = 0.5)
 ```
 
 
 ## Case study: is height hereditary?
 \Large
-The correlation between father and son's heights is:
+Correlation between father and son heights:
 
 ```{r}
-galton_heights %>% 
-    summarize(r = cor(father, son)) %>% 
+galton_heights %>%
+    summarize(r = cor(father, son)) %>%
     pull(r)
 ```
 
 ## Case study: is height hereditary?
 
-In R, we can obtain the least squares estimates using the `lm` function. To fit the model:
+Fit the least squares model with `lm`:
 $$
 y_i = \beta_0 + x_i \beta_1 + \varepsilon_i
 $$
-
-with $y_i$ the son's height and $x_i$ the father's height, we can use this code to obtain the least squares estimates: 
+($y_i$ = son's height, $x_i$ = father's height)
 ```{r, echo=TRUE}
 fit <- lm(son ~ father, data = galton_heights)
 fit$coef
 ```
 
 ## Case study: is height hereditary?
-The object `fit` includes more information about the fit. We can use the function `summary` to extract more of this information:
+`summary` gives more detail about the fit:
 \scriptsize
 ```{r}
 summary(fit)
 ```
 
 ## Case study: is height hereditary?
-We can use `ggplot2` layers to plot $\hat{Y}$ with its confidence intervals:
+Plot $\hat{Y}$ with confidence intervals in `ggplot2`:
 \small
 ```{r father-son-regression, fig.height = 3, fig.width = 3, out.width="40%", fig.align="center",message=FALSE}
 galton_heights %>% ggplot(aes(father, son)) +
@@ -180,11 +188,11 @@ galton_heights %>% ggplot(aes(father, son)) +
 
 ## Case study: is height hereditary?
 \Large
-The R function `predict` takes an `lm` object as input and returns the prediction. If requested, the standard errors and other information from which we can construct confidence intervals is provided:
+`predict` returns predictions from an `lm` object, plus standard errors if requested:
 
 \scriptsize
 ```{r father-son-predictor}
-fit <- galton_heights %>% lm(son ~ father, data = .) 
+fit <- galton_heights %>% lm(son ~ father, data = .)
 y_hat <- fit %>% predict(se.fit = TRUE)
 names(y_hat)
 ```
@@ -193,45 +201,45 @@ names(y_hat)
 
 ## Introduction to Regression
 \Large
-Now, we can extend our regression to include multiple ($p$) predictors: 
+Extend to $p$ predictors:
 $$y_i=x_{i1}\beta_1+\ldots+x_{ip}\beta_p+\epsilon_i=\sum_{j=1}^{p}x_{ij}\beta_j+\epsilon_i.$$
 
-Note that this model can still include a $y$-intercept if one of your predictors is a constant for all $x,y$ data pairs, e.g., $x_{ij}={1}$ for all $i$ for a particular $j$. In this case, $x_{ij}\beta_j=(1)\beta_j=\beta_0$.
+To include an intercept, make one predictor constant ($x_{ij}=1$ for all $i$), so $x_{ij}\beta_j=\beta_0$.
 
 ## Introduction to Regression
-Fitting the entire dataset using **multiple regression**:
+**Multiple regression** on the full dataset:
 \tiny
 ```{r, message=FALSE, warning=FALSE, echo=TRUE}
-fit2 <- GaltonFamilies %>% 
+fit2 <- GaltonFamilies %>%
   lm(childHeight ~ mother + father + gender + children, data = .)
 fit2 %>% summary()
 ```
 
 ## Introduction to Regression
-Interpreting this model: 
+Interpreting the model:
 
-* The intercept, $\beta_0$ = 17.4 inches (p-value=`5.08e-10`). 
-* Every inch increase in mother's height leads to a $\beta_{mother}$ = 0.32 (p-value<`2e-16`) in `childHeight`.
-* Every inch increase in father's height leads to a $\beta_{father}$ = 0.39 (p-value<`2e-16`) in `childHeight`.
-* `Gender=female` was selected as the reference level, and `gender=male` results in an increase in $\beta_{male}=5.2$ inches (p-value`<2e-16`). _R always chooses the first level of a factor (alphabetically) as the reference._ 
-* The number of children $\beta_{children}$ is not a significant predictor of child height (p-value=0.0825).
-* Multiple $R^2=0.637$ and adjusted $R^2=0.635$, thus `father`, `mother`, and `gender` are moderately strong predictors of `childHeight`.
-
-## Introduction to Regression
-\Large
-In addition, we can use matrices to represent our model. Assume ${\bf y}=(y_1, y_2, \ldots, y_n)$ with a matrix of predictors ${\bf X}$ and coefficient vector $\beta$ ($n\times 1$ vector). Then we can define our regression equation as: $${\bf y}=X\beta+\epsilon,$$
-where $\epsilon\sim N({\bf 0},\sigma^2 I_n)$ and $I_n$ is an identity matrix with dimension $n$.
+* Intercept: $\beta_0$ = 17.4 inches (p = `5.08e-10`)
+* Each inch of mother's height: +0.32 inches (p < `2e-16`)
+* Each inch of father's height: +0.39 inches (p < `2e-16`)
+* Male vs. female (reference): +5.2 inches (p < `2e-16`). _R uses the first factor level (alphabetical) as the reference._
+* Number of children: not significant (p = 0.0825)
+* $R^2=0.637$ (adjusted 0.635): `father`, `mother`, and `gender` are moderately strong predictors
 
 ## Introduction to Regression
 \Large
-Minimizing the least squared error is can be represented by
+In matrix form, with outcome ${\bf y}=(y_1, \ldots, y_n)$, predictor matrix ${\bf X}$, and coefficients $\beta$ ($p\times 1$):
+$${\bf y}=X\beta+\epsilon, \quad \epsilon\sim N({\bf 0},\sigma^2 I_n).$$
+
+## Introduction to Regression
+\Large
+Least squares then minimizes:
 $$\hat\beta=\underset{\beta}\inf\left\{\sum_{i=1}^{n}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2\right\}=\underset{\beta}\inf\left\{({\bf y}-{\bf X}\beta)'({\bf y}-{\bf X}\beta)\right\}$$
 
 ## Diversion: Maximum Likelihood for a Normal mean
 \Large
-Assume ${\bf x}=(x_1, x_2, \ldots, x_N)$, where $x_i$s are independent from a Normal($\mu,\sigma^2$) distribution, where ${\bf x}$ is observed and $\sigma^2$ is known. Then 
+Let $x_1, \ldots, x_N$ be independent Normal($\mu,\sigma^2$), with $\sigma^2$ known. The likelihood is
 $$L(\mu|{\bf x})=\left\{\frac{1}{2\pi\sigma^2}\right\}^{N/2}exp\left\{-\frac{1}{2\sigma^2}\sum_{i=1}^{N}(x_i-\mu)^2\right\}$$\pause
-Notice we can maximize $L(\mu|{\bf x})$ by minimizing $\sum_{i=1}^{N}(x_i-\mu)^2$ for $\mu$.
+Maximizing $L(\mu|{\bf x})$ = minimizing $\sum_{i=1}^{N}(x_i-\mu)^2$ over $\mu$.
 
 ## Diversion: Maximum Likelihood for a Normal mean
 \Large
@@ -257,19 +265,19 @@ therefore:
 
 ## Diversion: Maximum Likelihood for Regression
 \Large
-Assume ${\bf y}=(y_1, y_2, \ldots, y_N)$ with a matrix of predictors ${\bf X}$ and coefficient vector $\beta$ ($n\times 1$ vector). Then we can define our regression equation as: $${\bf y}=X\beta+\epsilon,$$
-where $\epsilon\sim N({\bf 0},\sigma^2 I_N)$ and $I_N$ is an identity matrix with dimension $N$.
+Recall the regression model:
+$${\bf y}=X\beta+\epsilon, \quad \epsilon\sim N({\bf 0},\sigma^2 I_N).$$
 
 ## Diversion: Maximum Likelihood for Regression
 \Large
-Now, extending the Normal mean MLE to regression, we note that $$\sum_{i=1}^{N}(y_i-x_1\beta_1-\ldots-x_N\beta_N)^2=({\bf y}-{\bf X}\beta)'({\bf y}-{\bf X}\beta),$$\pause
+Extending the Normal mean MLE: $$\sum_{i=1}^{N}(y_i-x_{i1}\beta_1-\ldots-x_{ip}\beta_p)^2=({\bf y}-{\bf X}\beta)'({\bf y}-{\bf X}\beta),$$\pause
 so
 $$L(\beta|{\bf X},{\bf y})=\left\{\frac{1}{2\pi\sigma^2}\right\}^{N/2}exp\left\{-\frac{1}{2\sigma^2}({\bf y}-{\bf X}\beta)'({\bf y}-{\bf X}\beta)\right\}.$$
-Thus maximizing the Likelihood is equivalent to minimizing $({\bf y}-{\bf X}\beta)'({\bf y}-{\bf X}\beta)$, or in other words, minimizing the sum of the squared error!
+Maximizing the likelihood = minimizing the sum of squared errors!
 
 ## Diversion: Maximum Likelihood for Regression
 \Large
-Note 
+Note
 $$({\bf y}-{\bf X}\beta)'({\bf y}-{\bf X}\beta)={\bf y}'{\bf y}-2\beta'{\bf X}'{\bf y}+\beta'{\bf X}'{\bf X}\beta,$$\pause
 and therefore
 \[
@@ -283,7 +291,7 @@ and therefore
 
 ## Diversion: Maximum Likelihood for Regression
 \Large
-Now note: 
+Now note:
 \[
 \begin{aligned}
 E[\hat\beta] &= E[{\bf (X'X)}^{-1}{\bf X'y}] \\\pause
@@ -295,7 +303,7 @@ E[\hat\beta] &= E[{\bf (X'X)}^{-1}{\bf X'y}] \\\pause
 
 ## Diversion: Maximum Likelihood for Regression
 \Large
-And, remembering that $$Var[{\bf Ay}]={\bf A}\{Var[{\bf y}]\}{\bf A'},$$ 
+And, remembering that $$Var[{\bf Ay}]={\bf A}\{Var[{\bf y}]\}{\bf A'},$$
 so therefore,
 \[
 \begin{aligned}
@@ -307,29 +315,29 @@ Var[\hat\beta] &= Var[{\bf (X'X)}^{-1}{\bf X'y}] \\\pause
 \end{aligned}
 \]
 
-Typically, we use the following to estimate $\sigma^2$:
+Estimate $\sigma^2$ with:
 $$\hat\sigma^2=\frac{1}{N-p-1}({\bf y}-X{\bf\hat\beta})'({\bf y}-X{\bf\hat\beta})$$
 
 ## Diversion: Maximum Likelihood for Regression
 \Large
-So we can conduct a hypothesis test $\beta$, where $H_0: \beta_j=0$ versus $H_a: \beta_j \ne 0$ using the statistic: 
+Test $H_0: \beta_j=0$ vs. $H_a: \beta_j \ne 0$ with:
 
-$$t_{\beta_j} = \frac{\hat\beta_j}{\hat\sigma\sqrt{v_{jj}}},$$ 
-where $v_{jj}$ is the $j$th diagonal element of ${\bf V={\bf (X'X)}^{-1}}$. Under $H_0$, $t_{\beta_j}$ will follow a $t$ distribution with $N-p-1$ degrees of freedom.
+$$t_{\beta_j} = \frac{\hat\beta_j}{\hat\sigma\sqrt{v_{jj}}},$$
+where $v_{jj}$ is the $j$th diagonal of ${\bf V={\bf (X'X)}^{-1}}$. Under $H_0$, $t_{\beta_j} \sim t_{N-p-1}$.
 
 
 
 <!--
 ## Case study: is height hereditary?
 \center
-![](regfigs/Galton's_correlation_diagram_1875.jpg) 
+![](regfigs/Galton's_correlation_diagram_1875.jpg)
 -->
 
 
 
 ## Case study: is height hereditary?
 \Large
-Thus using our estimator for ${\bf\beta}$: <!-- and $\hat\sigma^2$: -->
+Using our estimator: <!-- and $\hat\sigma^2$: -->
 
 $${\bf\hat\beta} = (X'X)^{-1}X'{\bf y}$$ <!--, Var({\bf\hat\beta})=\sigma^2(X'X)^{-1}, \mbox{ and }$$ --> <!--$$\hat\sigma^2=\frac{1}{N-p-1}({\bf y}-X{\bf\hat\beta})'({\bf y}-X{\bf\hat\beta})$$ -->
 \normalsize
@@ -341,7 +349,7 @@ beta_hat
 ```
 
 ## Case study: is height hereditary?
-Predicted values can be obtained by: $\hat y = X\hat\beta$, In R: 
+Predicted values: $\hat y = X\hat\beta$
 \scriptsize
 ```{r, ,fig.height = 3, fig.width = 3, out.width="30%", fig.align="center"}
 y_hat <- X %*% beta_hat
@@ -358,13 +366,13 @@ galton_heights %>% ggplot(aes(father, son)) +
 
 
 ## Case study: is height hereditary?
-For hypothesis testing we can optain a standard error: 
+Standard error for hypothesis testing:
 $$SE({\hat\beta_i})=\hat\sigma \sqrt{v_{ii}},$$ where $v_{ii}$ is the $i$th diagonal element of $(X'X)^{-1}$, and $$\hat\sigma^2=\frac{1}{N-p-1}({\bf y}-X{\bf\hat\beta})'({\bf y}-X{\bf\hat\beta})$$
 
 ```{r}
 N <- length(y)
 p <- length(beta_hat)
-sigma2_hat <- 1 / (N - p - 1) * 
+sigma2_hat <- 1 / (N - p - 1) *
   t(y - X %*% beta_hat) %*% (y - X %*% beta_hat)
 V <- solve(t(X) %*% X)
 Z2 <- beta_hat[2] / sqrt(sigma2_hat * V[2, 2])
@@ -375,29 +383,31 @@ Z2
 ## The Regression Fallacy
 \Large
 
-Wikipedia defines the _sophomore slump_ as: \vskip .2in
+The _sophomore slump_ (Wikipedia): \vskip .2in
 
-> A sophomore slump or sophomore jinx or sophomore jitters refers to an instance in which a second, or sophomore, effort fails to live up to the standards of the first effort. It is commonly used to refer to the apathy of students (second year of high school, college or university), the performance of athletes (second season of play), singers/bands (second album), television shows (second seasons) and movies (sequels/prequels).
-
-## The Regression Fallacy
-\Large
-In Major League Baseball, the rookie of the year (ROY) award is given to the first-year player who is judged to have performed the best. The _sophmore slump_ phrase is used to describe the observation that ROY award winners don't do as well during their second year. For example, this Fox Sports article^[http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715] asks "Will MLB's tremendous rookie class of 2015 suffer a sophomore slump?".
+> A second, or sophomore, effort fails to live up to the standards of the first: students, athletes (second season), bands (second album), TV shows, and movie sequels.
 
 ## The Regression Fallacy
 \Large
-Does the data confirm the existence of a sophomore slump? Let's take a look. Examining the data for batting average, we see that this observation holds true for the top performing ROYs:
+* MLB's Rookie of the Year (ROY) goes to the best first-year player
+* ROY winners often do worse in year two: the "sophomore slump"
+* Fox Sports^[http://www.foxsports.com/mlb/story/kris-bryant-carlos-correa-rookies-of-year-award-matt-duffy-francisco-lindor-kang-sano-120715]: "Will MLB's tremendous rookie class of 2015 suffer a sophomore slump?"
+
+## The Regression Fallacy
+\Large
+Is it real? Batting averages for the top ROYs do drop:
 
 <!--The data is available in the Lahman library, but we have to do some work to create a table with the statistics for all the ROY. First we create a table with player ID, their names, and their most played position.-->
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(Lahman)
-playerInfo <- Fielding %>% 
-  group_by(playerID) %>% 
+playerInfo <- Fielding %>%
+  group_by(playerID) %>%
   arrange(desc(G)) %>%
   slice(1) %>%
-  ungroup %>% 
-  left_join(People, by="playerID") %>% 
+  ungroup %>%
+  left_join(People, by="playerID") %>%
   select(playerID, nameFirst, nameLast, POS)
 ```
 
@@ -408,11 +418,11 @@ Now, we will create a table with only the ROY award winners and add their battin
 
 ```{r, echo=FALSE}
 ROY <- AwardsPlayers %>%
-  filter(awardID == "Rookie of the Year") %>% 
+  filter(awardID == "Rookie of the Year") %>%
   left_join(playerInfo, by="playerID") %>%
   rename(rookie_year = yearID) %>%
-  right_join(Batting, by="playerID") %>% 
-  mutate(AVG = H/AB) %>% 
+  right_join(Batting, by="playerID") %>%
+  mutate(AVG = H/AB) %>%
   filter(POS != "P")
 ```
 
@@ -420,13 +430,13 @@ ROY <- AwardsPlayers %>%
 We also will keep only the rookie and sophomore seasons and remove players that did not play sophomore seasons:
 -->
 ```{r, echo=FALSE}
-ROY <- ROY %>%  
-  filter(yearID == rookie_year | yearID == rookie_year+1) %>% 
-  group_by(playerID) %>% 
+ROY <- ROY %>%
+  filter(yearID == rookie_year | yearID == rookie_year+1) %>%
+  group_by(playerID) %>%
   mutate(rookie = ifelse(yearID == min(yearID), "rookie", "sophomore")) %>%
-  filter(n() == 2) %>% 
+  filter(n() == 2) %>%
   ungroup %>%
-  select(playerID, rookie_year, rookie, nameFirst, nameLast, AVG) 
+  select(playerID, rookie_year, rookie, nameFirst, nameLast, AVG)
 ```
 
 <!--
@@ -434,12 +444,12 @@ Finally, we will use the `spread` function to have one column for the rookie and
 -->
 
 ```{r, echo=FALSE}
-ROY <- ROY %>% spread(rookie, AVG) %>% arrange(desc(rookie)) 
+ROY <- ROY %>% spread(rookie, AVG) %>% arrange(desc(rookie))
 tmp <- ROY %>% slice(1:5) %>%
   select(nameFirst, nameLast, rookie_year, rookie, sophomore)
 if(knitr::is_html_output()){
   knitr::kable(tmp, "html") %>%
-    kableExtra::kable_styling(bootstrap_options = "striped", 
+    kableExtra::kable_styling(bootstrap_options = "striped",
                               full_width = FALSE)
 } else{
   knitr::kable(tmp, "latex", booktabs = TRUE) %>%
@@ -449,34 +459,34 @@ if(knitr::is_html_output()){
 
 ## The Regression Fallacy
 \Large
-In fact, the proportion of players that have a lower batting average their sophomore year is `r mean(ROY$sophomore - ROY$rookie <= 0)`.
+Proportion of ROYs with a lower sophomore average: `r mean(ROY$sophomore - ROY$rookie <= 0)`.
 
-o is it "jitters" or "jinx"? To answer this question, let's turn our attention to all players that played the 2013 and 2014 seasons and batted more than 130 times (minimum to win Rookie of the Year). 
+Jitters or jinx? Look at all players with 130+ at bats (the ROY minimum) in both 2013 and 2014.
 
 <!--We perform similar operations to what we did above: -->
 
 ```{r, echo=FALSE , message=FALSE, warning=FALSE}
-two_years <- Batting %>% 
-  filter(yearID %in% 2013:2014) %>% 
-  group_by(playerID, yearID) %>%  
-  filter(sum(AB) >= 130) %>% 
-  summarize(AVG = sum(H)/sum(AB)) %>% 
-  ungroup %>% 
-  spread(yearID, AVG) %>% 
+two_years <- Batting %>%
+  filter(yearID %in% 2013:2014) %>%
+  group_by(playerID, yearID) %>%
+  filter(sum(AB) >= 130) %>%
+  summarize(AVG = sum(H)/sum(AB)) %>%
+  ungroup %>%
+  spread(yearID, AVG) %>%
   filter(!is.na(`2013`) & !is.na(`2014`)) %>%
-  left_join(playerInfo, by="playerID") %>% 
-  filter(POS!="P") %>% 
+  left_join(playerInfo, by="playerID") %>%
+  filter(POS!="P") %>%
   select(-POS) %>%
-  arrange(desc(`2013`)) %>% 
+  arrange(desc(`2013`)) %>%
   select(nameFirst, nameLast, `2013`, `2014`)
-```  
+```
 
 ## The Regression Fallacy
 \Large
-The same pattern arises when we look at the top performers: batting averages go down for most of the top performers.
+Same pattern: most top performers drop.
 
 ```{r, echo=FALSE}
-tmp <- two_years %>% slice(1:5) 
+tmp <- two_years %>% slice(1:5)
 if(knitr::is_html_output()){
   knitr::kable(tmp, "html") %>%
     kableExtra::kable_styling(bootstrap_options = "striped", full_width = FALSE)
@@ -485,11 +495,11 @@ if(knitr::is_html_output()){
     kableExtra::kable_styling(font_size = 8)
 }
 ```
-But these are not rookies! 
+But these are not rookies!
 
 ## The Regression Fallacy
 \Large
-Also, look at what happens to the worst performers of 2013:
+Now the worst performers of 2013:
 
 ```{r, echo=FALSE}
 tmp <- arrange(two_years, `2013`) %>% slice(1:5)
@@ -502,11 +512,11 @@ if(knitr::is_html_output()){
 }
 ```
 
-Their batting averages mostly go up! 
+Their batting averages mostly go up!
 
 ## The Regression Fallacy
 \Large
-Is this some sort of reverse sophomore slump? It is not. There is no such thing as the sophomore slump. This is all explained with a simple statistical fact: the correlation for performance in two separate years is high, but not perfect:
+A reverse slump? No. There is no sophomore slump: year-to-year correlation is high, but not perfect.
 
 ```{r regression-fallacy, echo=FALSE, fig.height=3, fig.width=3, out.width="30%", fig.align='center'}
 qplot(`2013`, `2014`, data = two_years)
@@ -514,14 +524,15 @@ qplot(`2013`, `2014`, data = two_years)
 
 ## The Regression Fallacy
 \Large
-The correlation is `r cor(two_years$"2013",two_years$"2014")` and
-the data look very much like a bivariate normal distribution, which means we predict a 2014 batting average $Y$ for any given player that had a 2013 batting average $X$ with:
+Correlation is `r cor(two_years$"2013",two_years$"2014")` and the data look bivariate normal, so we predict 2014 average $Y$ from 2013 average $X$ with:
 
 $$ \frac{Y - .255}{.032} = 0.46 \left( \frac{X - .261}{.023}\right) $$
 
 ## The Regression Fallacy
 \Large
-Because the correlation is not perfect, regression tells us that, on average, expect high performers from 2013 to do a bit worse in 2014. It's not a jinx; it's just due to chance. The ROY are selected from the top values of $X$ so it is expected that $Y$ will **regress to the mean**.
+* Correlation < 1, so top 2013 performers are expected to do a bit worse in 2014
+* Not a jinx, just chance
+* ROYs are selected from the top of $X$, so $Y$ will **regress to the mean**
 
 
 

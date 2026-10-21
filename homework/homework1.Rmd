@@ -1,0 +1,118 @@
+---
+title: "Homework 1"
+author: "Due date: 10/30/26"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_float: true
+    theme: "flatly"
+editor_options: 
+  chunk_output_type: console
+---
+
+### Scoring (100 pts total)
+
+* **Completion (50 pts):** the point values listed with each task below are awarded for completing that task.
+* **Detailed grading (50 pts):** a subset of problems will be selected and graded in detail. These 50 points are divided among the selected problems in proportion to their point values.
+
+### Question 1. Machine Learning: Build Predictive Models Using `caret::train` (25 pts)
+
+#### Task 1.1: Select any dataset of interest (research or personal interest) to apply machine learning. Give a brief explanation of your data and what you want to predict (2.5 pts)
+
+#### Task 1.2: Read your dataset into R and use `caret` to create training (70%) and test (30%) sets (2.5 pts) 
+
+```{r data-split}
+# TODO: Students write code here
+```
+
+#### Tasks 1.3-1.5: Apply 3 machine learning models (`caret::train`) and cross-validation to your data (15 pts). Report the CV accuracy, test set overall accuracy, and make an ROC plot and calculate the AUC. 
+
+```{r model-fit}
+# TODO: Students write code here
+```
+
+#### Task 1.6: Compare your models. Which is best? What strengths/limitations do you see with each model? (5 pts)
+
+```{r model-compare}
+# TODO: Students write code here
+```
+
+### Question 2. Bootstrap: Analyzing a Mock Clinical Trial of a Headache Drug (25 pts)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+library(MASS)
+library(boot)
+library(dplyr)
+library(ggplot2)
+```
+
+#### Background
+
+A pharmaceutical company has developed a new drug, **PainAway**, intended to reduce the frequency of monthly headaches. You are asked to analyze a simulated clinical trial dataset comparing PainAway to a placebo. Each group contains 50 participants.  
+
+The outcome variable is **the number of headaches per month**, which is **count data** and may be skewed.
+
+#### Deliverables
+
+- Completed Rmd code for all tasks, including:
+  - R code
+  - Plots: boxplot, bootstrap histogram, method comparison plot.
+  - Written answers interpreting results and method comparisons.
+
+#### Task 2.1: Simulate the Data (5 pts)
+
+- Generate a dataset with 50 participants per group.
+- Use a **negative binomial distribution** to simulate headache counts:
+  - Drug group: mean = 2, overdispersion = 1.5
+  - Placebo group: mean = 5, overdispersion = 1.5
+- Create a data frame with columns:
+  - `group` (Drug or Placebo)
+  - `headaches`
+
+```{r simulate-data}
+# TODO: Students write code here
+```
+
+#### Task 2.2: Data Visualization (5 pts)
+
+- Produce a **boxplot with jittered points** to compare the distribution of headaches by group.
+- Comment briefly on skewness and differences between groups.
+
+```{r boxplot-data}
+# TODO: Students write code here
+```
+
+#### Task 3: Bootstrap Analysis (5 pts)
+
+- Write a function to calculate the **mean difference** in headaches between Drug and Placebo groups.
+- Perform a **bootstrap analysis** with 10,000 resamples.
+- Calculate the **95% confidence interval** using the percentile method.
+- Plot the **bootstrap distribution** and mark 0 for reference.
+
+```{r bootstrap}
+# TODO: Students write code here
+```
+
+#### Task 4: Parametric Comparison (t-test) (5 pts)
+
+- Perform a **two-sample t-test** to compare mean headaches between groups.
+- Report the estimate, 95% CI, and p-value.
+
+```{r t-test}
+# TODO: Students write code here
+```
+
+#### Task 5: Method Comparison (5 pts)
+
+- Create a **table comparing estimates and 95% CI** from:
+  - Bootstrap
+  - Two-sample t-test
+  - Discuss any differences and which method is most appropriate.
+- Make a **plot comparing the estimates and CIs** from all three methods.
+  - Comment on what it reveals about robustness and method choice.
+
+```{r comparison-plot}
+# TODO: Students write code here
+```
+

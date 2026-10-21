@@ -1,6 +1,6 @@
 ---
 title: "Regularization in Regression"
-author: | 
+author: |
   | W. Evan Johnson, Ph.D.
   | Professor, Division of Infectious Disease
   | Director, Center for Data Science
@@ -16,10 +16,10 @@ header-includes:
   - \addtobeamertemplate{frametitle}{\vspace*{.25in}}{\vspace*{.25in}}
   - \setbeamerfont{frametitle}{size=\huge}
   - \usepackage{tikz}
-output: 
+output:
   beamer_presentation
-classoption: aspectratio=169 
-editor_options: 
+classoption: aspectratio=169
+editor_options:
   chunk_output_type: console
 tables: true
 ---
@@ -29,108 +29,97 @@ knitr::opts_chunk$set(echo = TRUE)
 img_path <- "regfigs/"
 ```
 
-## Bias-Variance tradeoff 
+## Bias-Variance tradeoff
 \Large
-In statistics and machine learning, the **bias–variance tradeoff** is the property of a model that the variance of the parameter estimated across samples can be reduced by increasing the bias in the estimated parameters.
-
-The **bias–variance dilemma** or **bias–variance problem** is the conflict in trying to simultaneously minimize these two sources of error that prevent supervised learning algorithms from generalizing beyond their training set
+* **Bias–variance tradeoff:** we can reduce the variance of estimates by accepting some bias
+* **Bias–variance dilemma:** we can't minimize both at once, and both limit how well a model generalizes beyond its training set
 
 (Source: Wikipedia)
 
-## Bias-Variance tradeoff 
-The **bias** is an error from faulty assumptions or mispecification of the learning algorithm. High bias can cause an algorithm to miss the relevant relations between features and target outputs (underfitting).
+## Bias-Variance tradeoff
+\Large
+* **Bias:** error from wrong assumptions; misses real relationships (**underfitting**)
+* **Variance:** error from sensitivity to the training set; models the noise (**overfitting**)
 
-The **variance** is an error from sensitivity to small fluctuations in the training set. High variance may result from an algorithm modeling the random noise in the training data (overfitting).
-
-## Bias-Variance tradeoff 
+## Bias-Variance tradeoff
 ![](shrinkfigs/overunderfit.png)
 
 
 
-## Bias-Variance tradeoff 
+## Bias-Variance tradeoff
 \center
 ![](shrinkfigs/target.png){width=50%}
 
-## Bias-Variance tradeoff 
+## Bias-Variance tradeoff
 \Large
-The bias–variance tradeoff is a central problem in supervised learning. Ideally, one wants to choose a model that both accurately captures the regularities in its training data, but also generalizes well to unseen data. 
+A central problem in supervised learning. We want a model that:
+
+* captures the patterns in the training data, **and**
+* generalizes to new data
+
+Usually we can't have both:
+
+* High variance: fits training data well, but overfits noise
+* High bias: simpler, but underfits real patterns
 
 (Source: Wikipedia)
 
-## Bias-Variance tradeoff 
+## Regularization in Machine Learning
 \Large
-Unfortunately, it is typically impossible to do both simultaneously. High-variance learning methods may be able to represent their training set well but are at risk of overfitting to noisy or unrepresentative training data. In contrast, algorithms with high bias typically produce simpler models that may fail to capture important regularities (i.e. underfit) in the data.
-
-(Source: Wikipedia)
+* With small samples or noisy data, coefficient estimates can be inaccurate (overfitting)
+* **Regularization** restricts or shrinks estimates toward zero:
+  * reduces the impact of unimportant features
+  * adds a little bias to cut variance and overfitting
+  * improves performance on new data\footnote{Adapted from: https://www.analyticssteps.com/blogs/l2-and-l1-regularization-machine-learning}
 
 ## Regularization in Machine Learning
 \Large
-In regression analysis, the features are estimated using coefficients while modeling. In small sample sizes or noisy data coefficient estimates could be anecdotally incorrect (e.g., overfitting) or innacurate.  
+Examples:
 
-If the estimates can be restricted, penalized, or shrunk towards zero, then the impact of insignificant features might be reduced and would prevent models from high variance with a stable fit.\footnote{Adapted from: https://www.analyticssteps.com/blogs/l2-and-l1-regularization-machine-learning}
-
-## Regularization in Machine Learning
-\Large
-**Regularization** is the most used technique to penalize complex models in machine learning, it is deployed for reducing overfitting (or, contracting generalization errors) by putting small network weights into the model (adding a small amount of bias). Also, it enhances the performance of models for new inputs.\footnote{Source: https://www.analyticssteps.com/blogs/l2-and-l1-regularization-machine-learning}
-
-## Regularization in Machine Learning
-\Large
-Examples of regularization in machine learning, include:
-
-* Regression: Penalizing coefficients to create parsimonious models (variable selection)
-* K-means: Restricting the segments for avoiding redundant groups.
-* Neural networks: Confining the complexity (weights) of a model.
-* Random forests: Reducing the depths of tree and branches (new features)
-* Neural networks: Confining the complexity (weights) of a model. 
+* Regression: penalize coefficients for parsimonious models (variable selection)
+* K-means: restrict clusters to avoid redundant groups
+* Neural networks: constrain the weights
+* Random forests: limit tree depth
 
 
 ## Ridge regression
 \Large
-Ridge regression **regularizes** (shrinks) coefficients by imposing a penalty on 
-their size. The ridge coefficients minimize a penalized sum of squared error: 
+Ridge regression **shrinks** coefficients by penalizing their size:
 $$\hat\beta^{ridge}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\lambda\sum_{j=1}^{p}\beta_j^2\right\},$$
-where $\lambda\ge 0$ is a parameter that controls the shrinkage. The larger the value of $\lambda$ the more shrinkage  (towards 0). 
+where $\lambda\ge 0$ controls the shrinkage: larger $\lambda$, more shrinkage toward 0.
 
 
 ## Ridge regression
 \Large
-Or in matrix form, ridge regression minimizes:
+In matrix form:
 $$\hat\beta^{ridge}=\underset{\beta}\inf\left\{({\bf y}-{\bf X}\beta)^T({\bf y}-{\bf X}\beta) + \lambda\beta^T\beta\right\}.$$
-With a little work, the ridge regression solution can be shown to be: 
-$$\hat\beta^{ridge}=({\bf X}^T{\bf X}+\lambda {\bf I}_N)^{-1}{\bf X}^T{\bf y}$$
+with closed-form solution:
+$$\hat\beta^{ridge}=({\bf X}^T{\bf X}+\lambda {\bf I}_p)^{-1}{\bf X}^T{\bf y}$$
 
 ## Ridge regression
 \Large
-The regularization for ridge regression, $\lambda\beta^T\beta$, is usually 
-denoted as an **L2 regularization** or **L2 penalty**, as it adds a penalty which 
-is equal to the square of the magnitude of coefficients. 
-Support Vector Machines (SVMs) also implement this method.
+The ridge penalty $\lambda\beta^T\beta$ is an **L2 penalty** (squared size of the coefficients). SVMs use it too.
 
-L2 regularization can deal with multicollinearity problems (independent variables are highly correlated) through constricting the coefficient while keeping all the variables in a model. 
+* Handles multicollinearity: shrinks coefficients but keeps all variables
+* Does **not** select variables. For that, we use an **L1 penalty**.
 
-However, L2 regularization is not an effective method for selecting relevant
-predictors (or removing redundant parameters). We will later use a **L1 regularization** for this purpose.
- 
 
 ## Ridge regression: a Bayesian perspective
 \Large
-Ridge regression also has a clear Bayesian interpretation. It can be shownthat the Ridge penalty can be interpreted as a 'zero' prior (Normal prior with zero mean), and the $\lambda$ is related to the variance of the prior.
+The ridge penalty is equivalent to a Normal prior on $\beta$ with mean zero; $\lambda$ is inversely related to the prior variance.
 
 
 ## Lasso regression
 \Large
-Lasso (Least Absolute Shrinkage and Selection Operator) regression also **regularizes** coefficients by imposing a penalty on 
-their size, but it uses an **L1** penalty. The lasso coefficients minimize the following cost function: 
+Lasso (Least Absolute Shrinkage and Selection Operator) shrinks coefficients with an **L1** penalty:
 $$\hat\beta^{lasso}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\alpha\sum_{j=1}^{p}|\beta_j|\right\},$$
-where $\alpha\ge 0$ is a parameter that controls the shrinkage. The larger the value of $\alpha$ the more shrinkage  (towards 0). 
+where $\alpha\ge 0$ controls the shrinkage: larger $\alpha$, more shrinkage toward 0.
 
 ## Lasso regression
 \Large
-Notice the similarity to the ridge regression problem: the L2 ridge penalty $\sum_{j=1}^{p}\beta_j^2$ is replaced by the L1 lasso penalty $\sum_{j=1}^{p}|\beta_j|$. 
-
-This latter constraint makes the solutions nonlinear in the $y_i$, and there is no closed form expression for the lasso as was the case in ridge regression. 
-
-Because of the nature of the constraint, making $\alpha$ sufficiently small will cause some of the coefficients to be exactly zero. Thus the lasso does a kind of continuous subset selection, or conducts a **variable selection**.
+* Same as ridge, with L2 $\sum_{j=1}^{p}\beta_j^2$ replaced by L1 $\sum_{j=1}^{p}|\beta_j|$
+* No closed-form solution (nonlinear in the $y_i$)
+* A large enough $\alpha$ sets some coefficients **exactly to zero**: the lasso does **variable selection**
 
 ## Lasso vs Ridge regression
 \center
@@ -150,16 +139,17 @@ Because of the nature of the constraint, making $\alpha$ sufficiently small will
 
 ## Elastic net regularization
 \Large
-Which should I choose? Ridge or Lasso? Well, why do I have to choose! Instead use the **Elastic Net** that minimizes: 
+Ridge or lasso? Why choose! The **elastic net** minimizes:
 $$\hat\beta^{elastic\ net}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\alpha\sum_{j=1}^{p}|\beta_j|+\lambda\sum_{j=1}^{p}\beta_j^2\right\},$$
-for some $\alpha\ge 0$ and $\lambda\ge 0$.
+for $\alpha\ge 0$, $\lambda\ge 0$.
 
-The quadratic penalty term makes the loss function strongly convex, and it therefore has a unique minimum. The elastic net method includes OLS, Lasso, and Ridge regression by setting either $\alpha=0$, $\lambda=0$, or both to 0. 
+* The quadratic term makes the loss strongly convex (unique minimum)
+* Special cases: ridge ($\alpha=0$), lasso ($\lambda=0$), OLS (both 0)
 
 
 ## Regression Regularization in R: glmnet
 \Large
-We can use the **glmnet** package to apply regularization in R: 
+Regularization in R with **glmnet**:
 
 ```{r, eval=F}
 install.packages("glmnet")
@@ -167,12 +157,12 @@ install.packages("glmnet")
 
 ## Regression Regularization in R: glmnet
 \Large
-The default model used in the package is the “least squares” regression model and glmnet actually optimizes: 
-$$\hat\beta^{elastic\ net}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ (1-\alpha)\sum_{j=1}^{p}\beta_j^2 \right)  \right\},$$ 
-with $\alpha=1$ as a default (so Lasso!).
+For least squares (the default), glmnet minimizes:
+$$\hat\beta^{elastic\ net}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ (1-\alpha)\sum_{j=1}^{p}\beta_j^2 \right)  \right\},$$
+with $\alpha=1$ by default (lasso!).
 
 ## Regression Regularization in R: glmnet
-Using the quick start example from the package:
+The package's quick start example:
 
 ```{r}
 library(glmnet)
@@ -183,35 +173,35 @@ y <- QuickStartExample$y
 
 ## Regression Regularization in R: glmnet
 \Large
-We fit the model using the most basic call to glmnet.
+The most basic call:
 
 ```{r}
 fit <- glmnet(x, y)
 ```
 
-**fit** is an object of class glmnet that contains all the relevant information of the fitted model for further use. We do not encourage users to extract the components directly. Instead, various methods are provided for the object such as plot, print, coef and predict that enable us to execute those tasks more elegantly.
+`fit` holds the full fitted model. Use `plot`, `print`, `coef`, and `predict` rather than extracting components directly.
 
 ## Regression Regularization in R: glmnet
-We can visualize the coefficients by executing the plot method:
+Coefficient paths:
 ```{r fig.height = 3, fig.width = 6, out.width="80%", fig.align="center"}
 plot(fit)
 ```
 
 ## Regression Regularization in R: glmnet
-A summary of the glmnet path at each step is displayed if we just enter the object name or use the print function:
+`print` summarizes the path at each step:
 \small
 ```{r}
 print(fit)
 ```
 
 ## Regression Regularization in R: glmnet
-We can obtain the model coefficients at one or more $lambda$’s within the range of the sequence:
+Coefficients at a given $\lambda$:
 ```{r}
 coef(fit, s = 0.1)
 ```
 
 ## Regression Regularization in R: glmnet
-The function **glmnet** returns a sequence of models for the users to choose from. **Cross-validation** is perhaps the simplest and most widely used method to select a model. **cv.glmnet** is the main function to do cross-validation here, along with various supporting methods such as plotting and prediction.
+`glmnet` returns a whole sequence of models. Choose one by **cross-validation** with `cv.glmnet`:
 
 ```{r fig.height = 3, fig.width = 6, out.width="60%", fig.align="center"}
 cvfit <- cv.glmnet(x, y)
@@ -219,7 +209,7 @@ plot(cvfit)
 ```
 
 ## Regression Regularization in R: glmnet
-We can get the value of $\lambda_{min}$ and the model coefficients:
+$\lambda_{min}$ and its coefficients:
 \tiny
 ```{r }
 cvfit$lambda.min
@@ -228,23 +218,24 @@ coef(cvfit, s = "lambda.min")
 
 ## Example: Logistic Regression Elastic Net
 \Large
-Logistic regression is a widely-used model when the response is binary. Suppose the response variable $y$ takes values \{0,1\}. We model
+For a binary response $y \in \{0,1\}$, logistic regression models
 $$P(y=1|{\bf X})=\frac{e^{{\bf X\beta}}}{1+e^{X\beta}},$$
-which can be written in the following form:
+or equivalently
 $$\log\frac{P(y=1|{\bf X})}{P(y=0|{\bf X})}={\bf X}\beta,$$
-the so-called “logistic” or log-odds transformation.
+the logistic (log-odds) transformation.
 
 ## Example: Logistic Regression Elastic Net
 \Large
-We seek to minimize the following loss function: 
-$$\underset{\beta}\inf\left\{-\frac{1}{N}\sum_{i=1}^N y_i\log({\bf X}\beta)-\log\left(1+e^{{\bf X}\beta}\right)+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ (1-\alpha)\sum_{j=1}^{p}\beta_j^2 \right)\right\},$$
-where the right hand side is the loss function for standard logistic regression, and the right hand side is the elastic net regularization.
+Minimize:
+$$\underset{\beta}\inf\left\{-\frac{1}{N}\sum_{i=1}^N \left[y_i{\bf x}_i'\beta-\log\left(1+e^{{\bf x}_i'\beta}\right)\right]+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ (1-\alpha)\sum_{j=1}^{p}\beta_j^2 \right)\right\},$$
+the logistic regression loss plus the elastic net penalty.
 
-Logistic regression is often plagued with degeneracies when $p>N$ and exhibits wild behavior even when $N$ is close to $p$; the elastic net penalty alleviates these issues by regularizing and selecting variables.
+* Logistic regression breaks down when $p>N$ and is unstable when $N \approx p$
+* The elastic net fixes this by regularizing and selecting variables
 
 ## Example: Logistic Regression Elastic Net
 \Large
-Using the example dataset from the glmnet package:
+The glmnet binomial example:
 
 ```{r}
 library(glmnet)
@@ -255,19 +246,19 @@ y <- BinomialExample$y
 
 ## Example: Logistic Regression Elastic Net
 \Large
-Set family option to “binomial” in the glmnet function:
+Use `family = "binomial"`:
 ```{r}
 fit <- glmnet(x, y, family = "binomial")
 ```
 
-The code below uses misclassification error as the criterion for 10-fold cross-validation:
+10-fold CV with misclassification error:
 ```{r }
-cvfit <- cv.glmnet(x, y, family = "binomial", 
+cvfit <- cv.glmnet(x, y, family = "binomial",
                    type.measure = "class")
 ```
 
 ## Example: Logistic Regression Elastic Net
-Now we can plot the cross-validation results and find the 'best' $\lambda_{min}$:
+CV results and the best $\lambda_{min}$:
 ```{r fig.height = 4, fig.width = 10, out.width="100%", fig.align="center"}
 plot(cvfit)
 cvfit$lambda.min
