@@ -59,7 +59,13 @@ We will use multiple text resources in this class. None are required, all are av
 
 ## EVALUATION METHODS & COURSE GRADING
 ### Assessment/Evaluation:
-This course is a hands-on, project-based course. You will be graded based on five homework assignments/mini projects (15% each, total of 75% of grade) and your final project (25%; there will be no final exam). Homework assignments and mini projects will usually be assigned at the beginning of each week and will be due by Wednesday of the week after the material is covered. However, please plan to be flexible on due dates based on the material covered in class.
+This course is a hands-on, project-based course. Your grade will be based on:
+
+* **Homework assignments/mini projects (50%):** five assignments, 10% each. Half of each homework grade is for completion, and half is based on a detailed check of selected problems.
+* **Spot checks (25%):** two spot checks, each worth 100 points (12.5% each).
+* **Final project (25%):** there will be no final exam.
+
+ Homework assignments and mini projects will usually be assigned at the beginning of each week and will be due by Wednesday of the week after the material is covered. However, please plan to be flexible on due dates based on the material covered in class.
 
 ### Use of AI Tools:
 Generative AI tools (e.g., ChatGPT, Claude, GitHub Copilot) may be used as aids for coding and learning in this course, and we will discuss them in class. However, you are responsible for understanding, verifying, and being able to explain all code and results you submit. Please briefly note in each assignment how AI tools were used, if at all.
