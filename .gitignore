@@ -36,3 +36,7 @@ TA Form*.docx
 .Rapp.history
 */.Rapp.history
 */*/.Rapp.history
+.venv/
+
+## Jupyter
+.ipynb_checkpoints/

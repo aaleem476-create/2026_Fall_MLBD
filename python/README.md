@@ -4,8 +4,8 @@ This course is taught in R. These notebooks follow the R lectures section by sec
 
 | Week | Notebook | R lecture |
 |---|---|---|
-| 1 | [evaluationMetrics.ipynb](week1/evaluationMetrics.ipynb) | `lectures/week1/evaluationMetrics.Rmd` |
-| 1 | [crossValidation.ipynb](week1/crossValidation.ipynb) | `lectures/week1/crossValidation.Rmd` |
+| 2 | [evaluationMetrics.ipynb](week2/evaluationMetrics.ipynb) | `lectures/week2/evaluationMetrics.Rmd` |
+| 2 | [crossValidation.ipynb](week2/crossValidation.ipynb) | `lectures/week2/crossValidation.Rmd` |
 
 ## Setup
 From the repo root, create a virtual environment and install the requirements:
