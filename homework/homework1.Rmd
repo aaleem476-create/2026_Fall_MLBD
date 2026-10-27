@@ -16,6 +16,10 @@ editor_options:
 * **Completion (50 pts):** the point values listed with each task below are awarded for completing that task.
 * **Detailed grading (50 pts):** a subset of problems will be selected and graded in detail. These 50 points are divided among the selected problems in proportion to their point values.
 
+### Use of AI Tools
+
+You may use AI tools (e.g., ChatGPT, Claude, Copilot, Gemini) on this assignment, but you must document how you used them. As you work, keep brief notes on which tools you used, what tasks you used them for, and the general way you prompted them — you will need these for the **AI Use Statement** at the end of the assignment. The AI Use Statement is required but not scored; **submissions without it will not be accepted.** Honest disclosure will not lower your grade, and you remain responsible for the correctness of everything you submit.
+
 ### Question 1. Machine Learning: Build Predictive Models Using `caret::train` (25 pts)
 
 #### Task 1.1: Select any dataset of interest (research or personal interest) to apply machine learning. Give a brief explanation of your data and what you want to predict (2.5 pts)
@@ -116,3 +120,12 @@ The outcome variable is **the number of headaches per month**, which is **count 
 # TODO: Students write code here
 ```
 
+### AI Use Statement (required — not scored, but submissions without it will not be accepted)
+
+Describe in detail how you used AI tools on this assignment. If you did not use any, state that explicitly. Please include the tools you used, the tasks you used them for, and the general way you prompted them.
+
+**Example:**
+
+> I used Claude (Anthropic), through the Claude Code desktop app, as a coding assistant and tutor for this assignment. I chose the dataset and the modeling approach. I told the AI what I wanted each piece of code to do, and it wrote the R code to those specifications. I asked the AI to explain each line of code and the reasoning behind each choice. I also used it to learn concepts we had not fully covered in class, in particular the difference between repeated k-fold cross-validation and bootstrap resampling. I ran all the code myself and checked the output. I am responsible for the final content and can explain every line of code and every interpretation in this assignment.
+
+*Your answer here.*
