@@ -120,20 +120,20 @@ Model training and validation (Oct 14, 19)
 * The bootstrap
 * Application: clinical trials and drug testing 
 
-Tools for machine learning (Oct 21, 26)
+Tools for machine learning (Oct 21)
 
 * The caret package in R
 * The h2o package and AutoML
 * Application: biomarker development
 
-Regression and regularization (Oct 28, Nov 2)
+Regression and regularization (Oct 26, 28)
 
 * Multiple regression
 * Generalized linear models
 * Ridge regression, LASSO, ElasticNet
 * Application: infectious disease epidemiology
 
-Unsupervised learning and dimension reduction (Nov 4, 9)
+Unsupervised learning and dimension reduction (Nov 2, 4)
 
 * Hierarchical and K-means clustering
 * Visualization: boxplots, heatmaps, etc 
@@ -141,28 +141,27 @@ Unsupervised learning and dimension reduction (Nov 4, 9)
 * Advanced reduction methods (NMF, t-SNE, UMAP)
 * Application: gene expression and single cell transcriptomics
 
-Support vector machines (Nov 11, 16)
+Support vector machines (Nov 9, 11)
 
 * Linear and kernel SVMs
 * Application: TB gene expression biomarkers
-* Nov 16: pre-recorded lecture (no live session)
 
-Trees and ensemble methods (Nov 18, 23, 25)
+Trees and ensemble methods (Nov 16, 18, 23)
 
 * Regression/decision trees
 * Random forests
 * Gradient boosting (GBM, XGBoost)
 * Application: genome variation analysis
-* Nov 18: pre-recorded lecture (no live session)
+* Nov 16 and 18: pre-recorded lectures (no live session)
 
-Neural networks and deep learning (Nov 30, Dec 2)
+Neural networks and deep learning (Nov 25, 30)
 
 * Feed-forward and recurrent networks
 * Convolutional neural networks
 * Deep learning
 * Application: biomarker development (revisited)
 
-Modern AI in biomedicine (Dec 7, 9)
+Modern AI in biomedicine (Dec 2, 7, 9)
 
 * The evolution of AI: predictive, generative, and agentic
 * Generative AI, foundation models, and large language models (LLMs)

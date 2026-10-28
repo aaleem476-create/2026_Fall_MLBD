@@ -32,6 +32,17 @@ img_path <- "figs/"
 ```
 
 
+## Learning objectives
+\Large
+By the end of this lecture you should be able to:
+
+* Describe how the course runs: format, grading, and R/Python materials
+* Distinguish structured from unstructured data
+* Outline the data science process and the role of domain knowledge
+* Place machine learning in the analytics hierarchy
+* Define supervised vs. unsupervised learning
+* Name the main tools we'll use: caret (R) and scikit-learn (Python)
+
 ## Things you should know about MLBD
 \Large
 * Mondays & Wednesdays, 12:00-1:50pm (Oct 14 - Dec 16)
@@ -238,6 +249,15 @@ Algorithms that operate with kernels include:
 * Spectral clustering
 * Linear adaptive filters
 
+
+## Summary
+\Large
+* Biomedical data are large, varied, and often unstructured
+* Data science is a cycle: question, data, model, evaluate, communicate
+* Domain knowledge drives every step
+* Supervised learning predicts a known outcome; unsupervised finds structure
+* caret and scikit-learn give one interface to many ML methods
+* Coming up: regularization, kernels, trees, neural networks, and modern AI
 
 ## Session info
 \tiny

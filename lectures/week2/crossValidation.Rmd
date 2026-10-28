@@ -32,6 +32,15 @@ library(gam)
 img_path <- "cvfigs/"
 ```
 
+## Learning objectives
+\Large
+By the end of this lecture you should be able to:
+
+* Explain over-training and over-smoothing using kNN
+* Describe K-fold cross-validation and the bootstrap
+* Use cross-validation to choose a tuning parameter
+* Fit and tune models with caret's `train` function
+
 ## Cross-validation 
 \Large
 __Cross-validation__ is one of the most important ideas in machine learning. We start with the concepts and math, then implement it with `caret`.
@@ -750,6 +759,14 @@ p2 <- plot_cond_prob(predict(train_loess, mnist_27$true_p, type = "prob")[,2]) +
 gridExtra::grid.arrange(p2, p1, nrow=1)
 ```
 
+
+## Summary
+\Large
+* Training error is optimistic; we need an honest estimate of test error
+* Small $k$ in kNN over-trains; large $k$ over-smooths
+* K-fold CV and the bootstrap estimate test error from the training data
+* Tune parameters by CV; keep the test set for the final check
+* caret's `train` handles resampling and tuning for hundreds of models
 
 ## Session Info
 \tiny

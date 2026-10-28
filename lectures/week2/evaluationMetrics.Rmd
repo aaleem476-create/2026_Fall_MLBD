@@ -29,6 +29,16 @@ knitr::opts_chunk$set(echo = TRUE)
 img_path <- "img/"
 ```
 
+## Learning objectives
+\Large
+By the end of this lecture you should be able to:
+
+* Explain why we split data into training and test sets
+* Compute overall accuracy and explain when it misleads
+* Build and read a confusion matrix
+* Define sensitivity, specificity, and related metrics
+* Choose a metric that fits the biomedical question
+
 ## Evaluation metrics
 \Large
 Before optimizing algorithms, we need to define what "better" means. We use `caret` and the `heights` data from dslabs.
@@ -307,6 +317,14 @@ Overall accuracy is high despite low sensitivity, because female prevalence is l
 
 Missing females (low sensitivity) costs less accuracy than missing males would (low specificity).
 
+
+## Summary
+\Large
+* Always evaluate on data the model has not seen
+* Overall accuracy can hide poor performance when classes are imbalanced
+* The confusion matrix underlies every classification metric
+* Sensitivity and specificity trade off as the cutoff changes
+* Pick metrics by the cost of each type of error (e.g., missed TB case vs. false alarm)
 
 ## Session Info
 \tiny

@@ -29,6 +29,17 @@ knitr::opts_chunk$set(echo = TRUE)
 img_path <- "regfigs/"
 ```
 
+## Learning objectives
+\Large
+By the end of this lecture you should be able to:
+
+* Explain the bias-variance tradeoff
+* Describe ridge (L2), lasso (L1), and elastic net penalties
+* Explain why scaling matters and how glmnet handles it
+* Fit and tune penalized models with glmnet and cross-validation
+* Choose between $\lambda_{min}$ and $\lambda_{1se}$
+* Apply penalized logistic regression to NHANES diabetes data
+
 ## Bias-Variance tradeoff
 \Large
 * **Bias–variance tradeoff:** we can reduce the variance of estimates by accepting some bias
@@ -85,14 +96,14 @@ Examples:
 ## Ridge regression
 \Large
 Ridge regression **shrinks** coefficients by penalizing their size:
-$$\hat\beta^{ridge}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\lambda\sum_{j=1}^{p}\beta_j^2\right\},$$
+$$\hat\beta^{ridge}=\underset{\beta}{\arg\min}\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\lambda\sum_{j=1}^{p}\beta_j^2\right\},$$
 where $\lambda\ge 0$ controls the shrinkage: larger $\lambda$, more shrinkage toward 0.
 
 
 ## Ridge regression
 \Large
 In matrix form:
-$$\hat\beta^{ridge}=\underset{\beta}\inf\left\{({\bf y}-{\bf X}\beta)^T({\bf y}-{\bf X}\beta) + \lambda\beta^T\beta\right\}.$$
+$$\hat\beta^{ridge}=\underset{\beta}{\arg\min}\left\{({\bf y}-{\bf X}\beta)^T({\bf y}-{\bf X}\beta) + \lambda\beta^T\beta\right\}.$$
 with closed-form solution:
 $$\hat\beta^{ridge}=({\bf X}^T{\bf X}+\lambda {\bf I}_p)^{-1}{\bf X}^T{\bf y}$$
 
@@ -106,20 +117,21 @@ The ridge penalty $\lambda\beta^T\beta$ is an **L2 penalty** (squared size of th
 
 ## Ridge regression: a Bayesian perspective
 \Large
-The ridge penalty is equivalent to a Normal prior on $\beta$ with mean zero; $\lambda$ is inversely related to the prior variance.
+* Ridge = posterior mode under a **Normal** prior on $\beta$ with mean zero; $\lambda = \sigma^2/\tau^2$ is inversely related to the prior variance $\tau^2$
+* Lasso (next) = posterior mode under a **Laplace** (double-exponential) prior, which has a sharp peak at zero
 
 
 ## Lasso regression
 \Large
 Lasso (Least Absolute Shrinkage and Selection Operator) shrinks coefficients with an **L1** penalty:
-$$\hat\beta^{lasso}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\alpha\sum_{j=1}^{p}|\beta_j|\right\},$$
-where $\alpha\ge 0$ controls the shrinkage: larger $\alpha$, more shrinkage toward 0.
+$$\hat\beta^{lasso}=\underset{\beta}{\arg\min}\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\lambda\sum_{j=1}^{p}|\beta_j|\right\},$$
+where $\lambda\ge 0$ controls the shrinkage: larger $\lambda$, more shrinkage toward 0.
 
 ## Lasso regression
 \Large
 * Same as ridge, with L2 $\sum_{j=1}^{p}\beta_j^2$ replaced by L1 $\sum_{j=1}^{p}|\beta_j|$
 * No closed-form solution (nonlinear in the $y_i$)
-* A large enough $\alpha$ sets some coefficients **exactly to zero**: the lasso does **variable selection**
+* A large enough $\lambda$ sets some coefficients **exactly to zero**: the lasso does **variable selection**
 
 ## Lasso vs Ridge regression
 \center
@@ -138,13 +150,14 @@ where $\alpha\ge 0$ controls the shrinkage: larger $\alpha$, more shrinkage towa
 
 
 ## Elastic net regularization
-\Large
+\large
 Ridge or lasso? Why choose! The **elastic net** minimizes:
-$$\hat\beta^{elastic\ net}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\alpha\sum_{j=1}^{p}|\beta_j|+\lambda\sum_{j=1}^{p}\beta_j^2\right\},$$
-for $\alpha\ge 0$, $\lambda\ge 0$.
+$$\hat\beta^{elastic\ net}=\underset{\beta}{\arg\min}\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+\lambda_1\sum_{j=1}^{p}|\beta_j|+\lambda_2\sum_{j=1}^{p}\beta_j^2\right\},$$
+for $\lambda_1\ge 0$, $\lambda_2\ge 0$.
 
 * The quadratic term makes the loss strongly convex (unique minimum)
-* Special cases: ridge ($\alpha=0$), lasso ($\lambda=0$), OLS (both 0)
+* Special cases: ridge ($\lambda_1=0$), lasso ($\lambda_2=0$), OLS (both 0)
+* With **correlated** predictors, the lasso tends to keep one and drop the rest; the elastic net keeps the group together
 
 
 ## Regression Regularization in R: glmnet
@@ -158,8 +171,16 @@ install.packages("glmnet")
 ## Regression Regularization in R: glmnet
 \Large
 For least squares (the default), glmnet minimizes:
-$$\hat\beta^{elastic\ net}=\underset{\beta}\inf\left\{\sum_{i=1}^{N}(y_i-\sum_{j=1}^{p}x_{ij}\beta_j)^2+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ (1-\alpha)\sum_{j=1}^{p}\beta_j^2 \right)  \right\},$$
-with $\alpha=1$ by default (lasso!).
+$$\underset{\beta_0,\beta}{\arg\min}\left\{\frac{1}{2N}\sum_{i=1}^{N}(y_i-\beta_0-\sum_{j=1}^{p}x_{ij}\beta_j)^2+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ \frac{1-\alpha}{2}\sum_{j=1}^{p}\beta_j^2 \right)  \right\}$$
+
+* $\lambda$: overall penalty strength; $\alpha$: mix of lasso ($\alpha=1$, the default) and ridge ($\alpha=0$)
+* The intercept $\beta_0$ is **not** penalized
+
+## Scaling matters
+\Large
+* The penalty treats all coefficients the same, but a coefficient's size depends on its predictor's **units**
+* So predictors must be on a common scale
+* glmnet **standardizes** predictors internally by default (`standardize = TRUE`), then reports coefficients on the original scale
 
 ## Regression Regularization in R: glmnet
 The package's quick start example:
@@ -208,6 +229,18 @@ cvfit <- cv.glmnet(x, y)
 plot(cvfit)
 ```
 
+## Choosing $\lambda$: min vs. 1se
+\Large
+The two dashed lines in the CV plot:
+
+* $\lambda_{min}$: smallest cross-validated error
+* $\lambda_{1se}$: largest $\lambda$ within one standard error of the minimum: a simpler model that is about as accurate (the **one-standard-error rule**)
+
+\normalsize
+```{r}
+c(min = cvfit$lambda.min, `1se` = cvfit$lambda.1se)
+```
+
 ## Regression Regularization in R: glmnet
 $\lambda_{min}$ and its coefficients:
 \tiny
@@ -227,7 +260,7 @@ the logistic (log-odds) transformation.
 ## Example: Logistic Regression Elastic Net
 \Large
 Minimize:
-$$\underset{\beta}\inf\left\{-\frac{1}{N}\sum_{i=1}^N \left[y_i{\bf x}_i'\beta-\log\left(1+e^{{\bf x}_i'\beta}\right)\right]+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ (1-\alpha)\sum_{j=1}^{p}\beta_j^2 \right)\right\},$$
+$$\underset{\beta}{\arg\min}\left\{-\frac{1}{N}\sum_{i=1}^N \left[y_i{\bf x}_i'\beta-\log\left(1+e^{{\bf x}_i'\beta}\right)\right]+ \lambda \left( \alpha\sum_{j=1}^{p}|\beta_j|+ \frac{1-\alpha}{2}\sum_{j=1}^{p}\beta_j^2 \right)\right\},$$
 the logistic regression loss plus the elastic net penalty.
 
 * Logistic regression breaks down when $p>N$ and is unstable when $N \approx p$
@@ -246,14 +279,14 @@ y <- BinomialExample$y
 
 ## Example: Logistic Regression Elastic Net
 \Large
-Use `family = "binomial"`:
+Use `family = "binomial"`, and `alpha = 0.5` for an even lasso/ridge mix:
 ```{r}
-fit <- glmnet(x, y, family = "binomial")
+fit <- glmnet(x, y, family = "binomial", alpha = 0.5)
 ```
 
 10-fold CV with misclassification error:
 ```{r }
-cvfit <- cv.glmnet(x, y, family = "binomial",
+cvfit <- cv.glmnet(x, y, family = "binomial", alpha = 0.5,
                    type.measure = "class")
 ```
 
@@ -269,6 +302,112 @@ cvfit$lambda.min
 ```{r }
 coef(cvfit, s = "lambda.min")
 ```
+
+## Application: NHANES
+\large
+**National Health and Nutrition Examination Survey** (CDC): interviews, physical exams, and labs on a representative sample of the US population.
+
+* `NHANES` R package: 10,000 participants from the 2009-2012 surveys, 76 variables
+* Question: who has **diabetes**? Predict it from demographics, exam, and lab values
+* Many correlated predictors (BMI, weight, height; systolic and diastolic BP)
+
+```{r, eval=FALSE}
+install.packages("NHANES")
+```
+
+## NHANES: the data
+\small
+```{r nhanes-data, message=FALSE}
+library(NHANES); library(tidyverse)
+d <- NHANES %>% filter(Age >= 20) %>% distinct(ID, .keep_all = TRUE) %>%
+  select(Diabetes, Age, Gender, Race1, Education, Poverty, BMI, Weight,
+         Height, Pulse, BPSysAve, BPDiaAve, TotChol, DirectChol,
+         SleepHrsNight, PhysActive, Smoke100, HealthGen) %>%
+  drop_na()
+table(d$Diabetes)
+X <- model.matrix(Diabetes ~ ., d)[, -1]   # dummy-code factors
+y <- as.numeric(d$Diabetes == "Yes")
+dim(X)
+```
+
+## NHANES: train/test split and lasso
+\small
+```{r nhanes-cv, fig.show='hide'}
+set.seed(2026)
+train <- sample(nrow(X), 0.7 * nrow(X))
+cv_lasso <- cv.glmnet(X[train, ], y[train], family = "binomial",
+                      alpha = 1, type.measure = "auc")
+plot(cv_lasso)
+```
+
+```{r nhanes-cv-plot, echo=FALSE, fig.height = 3.2, fig.width = 8, out.width="70%", fig.align="center"}
+plot(cv_lasso)
+```
+
+## NHANES: which variables does the lasso keep?
+\scriptsize
+```{r}
+b <- coef(cv_lasso, s = "lambda.1se")
+round(b[b[, 1] != 0, ], 3)
+```
+
+\normalsize
+Age, BMI, low HDL ("good") cholesterol, and poor self-rated health. Weight and height drop out: BMI already carries that information.
+
+## NHANES: ridge vs. elastic net vs. lasso vs. logistic
+\scriptsize
+```{r nhanes-compare, results='hide'}
+auc <- function(p, y) {           # Mann-Whitney form of the AUC
+  r <- rank(p); n1 <- sum(y)
+  (sum(r[y == 1]) - n1 * (n1 + 1) / 2) / (n1 * sum(1 - y)) }
+res <- sapply(c(ridge = 0, enet = 0.5, lasso = 1), function(a) {
+  cv <- cv.glmnet(X[train, ], y[train], family = "binomial", alpha = a,
+                  type.measure = "auc")
+  p  <- predict(cv, X[-train, ], s = "lambda.1se", type = "response")
+  c(AUC = auc(p, y[-train]), predictors = sum(coef(cv, s = "lambda.1se") != 0) - 1) })
+g <- glm(y ~ ., data = data.frame(y, X)[train, ], family = binomial)
+p_glm <- predict(g, data.frame(X)[-train, ], type = "response")
+tab <- round(cbind(res, glm = c(auc(p_glm, y[-train]), ncol(X))), 3)
+```
+
+## NHANES: ridge vs. elastic net vs. lasso vs. logistic
+\Large
+Test-set AUC (30% held out) and number of predictors used:
+```{r, echo=FALSE}
+tab
+```
+
+## NHANES: what about a small study?
+With 2,500 training samples, plain logistic regression does fine. Repeat with only **150** training samples, 20 times:
+\small
+```{r nhanes-small}
+set.seed(1)
+small <- replicate(20, {
+  tr <- sample(train, 150)
+  cv <- suppressWarnings(cv.glmnet(X[tr, ], y[tr], family = "binomial",
+                                   alpha = 0.5, nfolds = 5))
+  g  <- suppressWarnings(glm(y ~ ., data = data.frame(y, X)[tr, ],
+                            family = binomial))
+  c(enet = auc(predict(cv, X[-train, ], s = "lambda.min"), y[-train]),
+    glm  = auc(predict(g, data.frame(X)[-train, ]), y[-train])) })
+round(rowMeans(small), 3)
+```
+
+## NHANES: lessons
+\Large
+* Large $N$, modest $p$: regularization gives about the same accuracy with **far fewer** predictors (simpler, cheaper to measure)
+* Small $N$ relative to $p$ (150 people, ~18 cases, 26 predictors): regularization **protects** against overfitting (test AUC about 0.78 vs. 0.70)
+* Selected variables are **predictive**, not causal, and can change with the sample
+* Note: NHANES uses a complex survey design; for population estimates, use survey weights (`survey` package)
+
+## Summary
+\Large
+* Regularization adds a little bias to reduce variance and overfitting
+* Ridge shrinks; lasso shrinks and selects; elastic net does both and handles correlated predictors
+* Standardize predictors (glmnet does by default); don't penalize the intercept
+* Tune $\lambda$ (and $\alpha$) by cross-validation; $\lambda_{1se}$ gives a simpler model
+* Large $N$: similar accuracy with fewer predictors. Small $N$: better accuracy
+* Selected variables are predictive, not causal
 
 ## Session Info
 \tiny

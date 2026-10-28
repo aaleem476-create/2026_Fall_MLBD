@@ -1,0 +1,137 @@
+---
+title: "Homework 2"
+author: "Due date: 11/6/26"
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_float: true
+    theme: "flatly"
+editor_options:
+  chunk_output_type: console
+---
+
+### Scoring (100 pts total)
+
+* **Completion (50 pts):** the point values listed with each task below are awarded for completing that task.
+* **Detailed grading (50 pts):** a subset of problems will be selected and graded in detail. These 50 points are divided among the selected problems in proportion to their point values.
+
+### Use of AI Tools
+
+You may use AI tools (e.g., ChatGPT, Claude, Copilot, Gemini) on this assignment, but you must document how you used them. As you work, keep brief notes on which tools you used, what tasks you used them for, and the general way you prompted them — you will need these for the **AI Use Statement** at the end of the assignment. The AI Use Statement is required but not scored; **submissions without it will not be accepted.** Honest disclosure will not lower your grade, and you remain responsible for the correctness of everything you submit.
+
+### Question 1. Regularization with the Salary Dataset (30 pts)
+
+#### Salary dataset {.tabset}
+A researcher wants to determine how employee salaries at a certain company are related to the length of employment, previous experience, and education. The researcher selects eight employees from the company and obtains the data shown below.
+
+```{r salary}
+suppressMessages(library(tidyverse))
+salary <- tibble(
+    Salary = c(57310.00, 57380.00, 54135.00, 56985.00, 58715.00, 60620.00, 59200.00, 60320.00),
+    Employment = c(10,5,3,6,8,20,8,14),
+    Experience = c(2,6,1,5,8,0,4,6),
+    Education = c(16,16,12,14,16,12,18,17)
+)
+library(DT)
+datatable(salary)
+```
+
+#### Task 1.1 – Fit LASSO, Ridge, and Elastic Net Models (20 pts)
+
+Use `glmnet` to fit three models:
+
+- **LASSO:** `alpha = 1`
+- **Ridge:** `alpha = 0`
+- **Elastic Net:** `alpha = 0.5`
+
+Use a sequence of lambda values and visualize the coefficient paths.
+
+```{r salary-regularization}
+# TODO: Students fit all three models using glmnet
+# TODO: Plot coefficient paths for each
+# TODO: Display coefficient estimates at several lambda values
+```
+
+#### Task 1.2 – Interpretation (10 pts)
+
+- Describe how coefficient shrinkage differs among LASSO, Ridge, and Elastic Net.
+- Which variables are most important for predicting salary?
+- Discuss potential reasons to choose one regularization method over another.
+
+
+### Question 2. Regularization with the Car Sales Dataset (40 pts)
+
+You are given a dataset `Car price prediction.csv` with variables such as year, kilometers driven, fuel type, and selling price.
+
+#### Task 2.1 – Load and Inspect the Data (5 pts)
+
+```{r car-load}
+# TODO: Students load and preview the dataset using read_csv()
+```
+
+#### Task 2.2 – Build Predictive Models (20 pts)
+
+Use `glmnet` to fit LASSO, Ridge, and Elastic Net regression models predicting `selling_price`.
+
+```{r car-models}
+# TODO: Students fit models with glmnet using appropriate predictors
+# TODO: Visualize coefficient paths
+# TODO: Print coefficients for selected lambda values
+```
+
+#### Task 2.3 – Cross-Validation for Model Selection (10 pts)
+
+Use `cv.glmnet` to identify the best lambda (`lambda.min`) and plot the cross-validation curve.
+
+```{r car-cv}
+# TODO: Students run cv.glmnet()
+# TODO: Plot CV results and report lambda.min and coefficients
+```
+
+#### Task 2.4 – Discussion (5 pts)
+
+Compare performance and interpretability of the three models. Which provides the best balance between bias and variance?
+
+
+### Question 3. Regularization and Feature Selection in Cereal Data (30 pts)
+
+The `cereal.csv` dataset includes nutritional information and a “rating” score for different cereal brands. Your goal is to model how nutritional content predicts the cereal’s rating.
+
+#### Task 3.1 – Load Data (5 pts)
+
+```{r cereal-load}
+# TODO: Students read in cereal.csv and examine its structure
+```
+
+#### Task 3.2 – Model Fitting and Visualization (20 pts)
+
+Use `glmnet` with several lambda values to observe coefficient shrinkage patterns.
+
+```{r cereal-regularization}
+# TODO: Students fit glmnet model
+# TODO: Plot coefficient path and extract coefficients for λ = 8, 5, 3, 1
+```
+
+#### Task 3.3 – Interpret Results (5 pts)
+
+- Which nutrients are most influential on the cereal’s rating?
+- How does regularization help handle correlated predictors in this dataset?
+
+---
+
+### Deliverables
+
+Submit:
+
+- Completed `.Rmd` file and rendered HTML report
+- All code blocks filled in (`# TODO` replaced)
+- Plots of coefficient paths and cross-validation results
+- Written answers for interpretation tasks
+- The AI Use Statement below
+
+### AI Use Statement (required — not scored, but submissions without it will not be accepted)
+
+Describe in detail how you used AI tools on this assignment. If you did not use any, state that explicitly. Please include the tools you used, the tasks you used them for, and the general way you prompted them.
+
+*Your answer here.*

@@ -3,6 +3,8 @@ pandas
 scipy
 scikit-learn
 matplotlib
+seaborn
 pygam
 jupyterlab
 statsmodels
+umap-learn

@@ -29,6 +29,16 @@ knitr::opts_chunk$set(echo = TRUE, warning = F)
 img_path <- "regfigs/"
 ```
 
+## Learning objectives
+\Large
+By the end of this lecture you should be able to:
+
+* Define regression and its vocabulary (outcome, predictors, errors)
+* Fit simple and multiple linear regression in R
+* Derive least squares as maximum likelihood under normal errors
+* Compute estimates, standard errors, and tests by hand with matrices
+* Recognize the regression fallacy (regression to the mean)
+
 ## Introduction to Regression
 \Large
 We often want to know how two or more variables are related.
@@ -536,6 +546,14 @@ $$ \frac{Y - .255}{.032} = 0.46 \left( \frac{X - .261}{.023}\right) $$
 
 
 
+
+## Summary
+\Large
+* Linear regression finds the best-fitting line by least squares
+* Least squares = maximum likelihood when errors are normal
+* In matrix form: $\hat\beta = (X^TX)^{-1}X^Ty$, with $Var(\hat\beta) = \sigma^2 (X^TX)^{-1}$
+* Galton's heights: regression was born studying heredity
+* Regression to the mean explains the "sophomore slump": extreme performers drift back
 
 ## Session Info
 \tiny

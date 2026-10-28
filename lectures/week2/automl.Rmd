@@ -32,6 +32,15 @@ img_path <- "amlFigs/"
 ```
 
 
+## Learning objectives
+\Large
+By the end of this lecture you should be able to:
+
+* Describe what H2O is and why it scales
+* Set up H2O in R (Java required)
+* Run H2O k-means and AutoML
+* Read an AutoML leaderboard
+
 ## Describing H2O
 \Large
 There is a lot of buzz for machine learning algorithms as well as a requirement for its experts. We all know that there is a significant gap in the skill requirement. The motive of H2O is to provide a platform which made easy for the non-experts to do experiments with machine learning.
@@ -217,6 +226,13 @@ aml <- h2o.automl(y = y, training_frame = prostate,
 lb <- h2o.get_leaderboard(aml)
 head(lb)
 ```
+
+## Summary
+\Large
+* H2O: open-source, in-memory, distributed ML with an R interface
+* AutoML trains and tunes many models automatically
+* The leaderboard ranks models by cross-validated performance
+* AutoML speeds up model search, but you still own the question, data, and validation
 
 ## Session Info
 \tiny
